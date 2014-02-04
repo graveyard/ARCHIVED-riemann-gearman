@@ -25,3 +25,11 @@ Usage of riemann-gearman:
   -riemann="tcp://localhost:5555": Write events to Riemann running at this port. Can also specify 'stdout' to debug.
   -tags="": Tags to add to the Riemann event.
 ```
+
+Alternatively you can run via Docker:
+
+```bash
+docker run -d rgarcia/riemann-gearman riemann-gearman ...
+```
+
+The image referenced above was built with the Dockerfile in this repo's root.
