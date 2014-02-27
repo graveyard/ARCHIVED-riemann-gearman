@@ -1,10 +1,10 @@
 # riemann-gearman
 
-Periodically outputs gearman admin data as [Riemann]() events for monitoring and alerting.
+Periodically outputs gearman admin data as [Riemann](http://riemann.io) events for monitoring and alerting.
 
 ## Installation
 
-The following downloads and builds riemanner.
+The following downloads and builds riemann-gearman.
 You must have Go installed (developed/tested against version 1.2):
 
 ```bash
