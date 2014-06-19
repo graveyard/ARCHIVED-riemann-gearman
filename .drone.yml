@@ -5,3 +5,13 @@ notify:
   email:
     recipients:
       - drone@clever.com
+publish:
+  docker:
+    docker_file: Dockerfile
+    docker_server: {{docker_server}}
+    docker_port: 4243
+    docker_version: 0.10.0
+    repo_base_name: clever
+    username: {{username}}
+    password: {{password}}
+    email: {{email}}
