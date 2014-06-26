@@ -15,3 +15,4 @@ publish:
     username: {{username}}
     password: {{password}}
     email: {{email}}
+    branch: master
