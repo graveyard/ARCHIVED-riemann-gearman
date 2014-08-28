@@ -1,24 +1,26 @@
 image: go1.2
-script:
-  - make test
 notify:
   email:
     recipients:
-      - drone@clever.com
+    - drone@clever.com
   hipchat:
-    room: Clever-Dev-CI
-    token: {{hipchatToken}}
+    on_failure: true
     on_started: true
     on_success: true
-    on_failure: true
+    room: Clever-Dev-CI
+    token: {{hipchatToken}}
 publish:
   docker:
-    docker_file: Dockerfile
-    docker_server: {{docker_server}}
-    docker_port: 4243
-    docker_version: 0.10.0
-    repo_base_name: clever
-    username: {{username}}
-    password: {{password}}
-    email: {{email}}
     branch: master
+    docker_file: Dockerfile
+    docker_port: 4243
+    docker_server: {{docker_server}}
+    docker_version: 0.10.0
+    email: {{email}}
+    image_name: clever/riemann-gearman
+    password: {{password}}
+    push_latest: true
+    registry_login: true
+    username: {{username}}
+script:
+- make test
