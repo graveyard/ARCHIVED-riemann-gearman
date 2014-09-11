@@ -26,10 +26,10 @@ Usage of riemann-gearman:
   -tags="": Tags to add to the Riemann event.
 ```
 
-Alternatively you can run via Docker:
+Alternatively you can run via Docker (as an example):
 
 ```bash
-docker run -d rgarcia/riemann-gearman riemann-gearman ...
+docker run -d rgarcia/riemann-gearman riemann-gearman -gearman="tcp://<gearman host>:4730" -interval=60000 -riemann="<riemann host>" -tags="production,docker"
 ```
 
 The image referenced above was built with the Dockerfile in this repo's root.
