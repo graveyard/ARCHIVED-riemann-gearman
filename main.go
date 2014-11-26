@@ -57,8 +57,19 @@ func writeStatus(c riemanner.RaidmanClient, status gearadmin.Status, tags []stri
 	})
 }
 
-func main() {
+func sendMetrics(g gearadmin.GearmanAdmin, r riemanner.RaidmanClient, tags []string) {
+	statuses, err := g.Status()
+	if err != nil {
+		log.Fatalf("error retrieving gearman status: %s", err.Error())
+	}
+	for _, status := range statuses {
+		if err := writeStatus(r, status, tags); err != nil {
+			log.Fatalf("error writing status event: %s", err.Error())
+		}
+	}
+}
 
+func main() {
 	var gearman, riemann, tagswithdelim string
 	var interval int
 	flag.StringVar(&gearman, "gearman", "tcp://localhost:4730",
@@ -100,16 +111,9 @@ func main() {
 		riemannClient = raidmanClient
 	}
 
-	// Poll for stats
+	// Send the stats when we first start, and then at the specified interval
+	sendMetrics(gearadmin, riemannClient, tags)
 	for _ = range time.Tick(time.Duration(interval) * time.Millisecond) {
-		statuses, err := gearadmin.Status()
-		if err != nil {
-			log.Fatal("error retrieving gearman status", err)
-		}
-		for _, status := range statuses {
-			if err := writeStatus(riemannClient, status, tags); err != nil {
-				log.Fatal("error writing status event", err)
-			}
-		}
+		sendMetrics(gearadmin, riemannClient, tags)
 	}
 }
