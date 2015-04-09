@@ -3,24 +3,23 @@ notify:
   email:
     recipients:
     - drone@clever.com
-  hipchat:
+  slack:
     on_failure: true
-    on_started: true
-    on_success: true
-    room: Clever-Dev-CI
-    token: {{hipchatToken}}
+    on_started: false
+    on_success: false
+    webhook_url: $$slack_webhook
 publish:
   docker:
-    branch: master
     docker_file: Dockerfile
-    docker_port: 4243
-    docker_server: {{docker_server}}
-    docker_version: 0.10.0
-    email: {{email}}
+    docker_server: $$docker_server
+    email: $$email
     image_name: clever/riemann-gearman
-    password: {{password}}
-    push_latest: true
+    password: $$password
     registry_login: true
-    username: {{username}}
+    tags:
+    - $(git rev-parse --short HEAD)
+    username: $$username
+    when:
+      branch: master
 script:
 - make test
